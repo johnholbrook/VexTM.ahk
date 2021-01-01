@@ -148,4 +148,56 @@ class VexTM_FieldSet{
 }
 
 class VexTM_PitDisplay{
+    __New(name){
+        this.name := name
+    }
+
+     _confirm_window_open(){
+        if !WinExist(this.name){
+            name := this.name
+            MsgBox % Format("Please open the control window for {}", name) 
+            return 0
+        }
+        return 1
+    }
+
+    set_display(disp){
+        if (this._confirm_window_open()){
+            StringLower, disp, disp
+            name := this.name
+            switch disp {
+                Case "none":
+                    ControlClick, None, % name
+                Case "logo":
+                    ControlClick, Logo, % name
+                Case "schedule":
+                    ControlClick,  Schedule, % name
+                Case "rankings":
+                    ControlClick, Rankings, % name
+                Case "skills rankings", "skills":
+                    ControlClick, Skills Rankings, % name
+                Case "alliance selection", "alliances":
+                    ControlClick, Alliance Selection, % name
+                Case "elim bracket", "bracket":
+                    ControlClick, Elim Bracket, % name
+                Case "inspection":
+                    ControlClick, Inspection, % name
+                Case "upcoming matches", "queueing":
+                    ControlClick, Upcoming Matches, % name
+            }
+        }
+    }
+
 }
+
+; __VexTM_GetHwnd(x, y){
+;     tm := WinExist("VEX Tournament Manager")
+; 	hwnd := tm
+; 	loop
+; 	{
+; 		old_hwnd := hwnd
+; 		hwnd := DllCall("RealChildWindowFromPoint", "Ptr", hwnd, "Int64", (x<<32)|y, "Ptr")
+; 	}
+; 	until hwnd == old_hwnd
+; 	return hwnd
+; }
